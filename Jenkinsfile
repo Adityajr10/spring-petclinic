@@ -1,6 +1,6 @@
 pipeline {
-     agent { label 'Jenkins-Agent' )
-     options (
+     agent { label 'Jenkins-Agent' }
+     options {
         timeout (time: 1, unit: 'HOURS') 
         retry (2)
        }
