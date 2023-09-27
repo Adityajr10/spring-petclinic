@@ -19,7 +19,7 @@ pipeline {
           }
         }    
         stage ('Reporting and Archiving') {
-          steps
+          steps {
             junit testResults: 'target/surefire-reports/* .xml'
         }
       }
