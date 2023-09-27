@@ -1,5 +1,9 @@
 pipeline {
      agent { label 'Jenkins-Agent' }
+     tools {
+        jdk 'Java17'
+        maven 'Maven3'
+     }
      options { 
 	timeout(time: 1, unit: 'HOURS')
         retry(2)
