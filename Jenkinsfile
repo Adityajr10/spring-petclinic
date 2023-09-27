@@ -1,34 +1,35 @@
 pipeline {
-    agent { label 'Jenkins-Agent' }
-    tools {
-        jdk 'Java17'
-        maven 'Maven3'
-    }
-
-    stages{
-        stage("Cleanup Workspace"){
-                steps {
-                cleanWs()
-                }
-        }
-
-        stage("Checkout from SCM"){
-                steps {
-                    git branch: 'main', credentialsId: 'github', url: 'https://github.com/Adityajr10/spring-petclinic.git'
-                }
-        }
-
-        stage("Build Application"){
-            steps {
-                sh "mvn clean package"
-            }
-
+     agent { label ' JDK171 )
+     options (
+        timeout (time: 1, unit: 'HOURS') 
+        retry (2)
        }
-
-       stage("Test Application"){
-           steps {
-                 sh "mvn test"
-           }
+     triggers s
+        cron ('0 * * * *)
+     }         
+    stages {
+        stage ('Source code') {
+          steps {
+              git url: 'https: //github.com/Adityajr10/spring-petclinic.git' ,branch:'main'
         }
-     }
-  }
+      }
+        stage ('Build the code') {
+          steps {
+            sh script: 'mvn clean package'
+          }
+        }    
+        stage ('Reporting and Archiving') {
+          steps
+            junit testResults: 'target/surefire-reports/* .xml'
+        }
+      }
+    }          
+    post {
+        success {
+         echo "Success"
+    }
+        unscuccessful {
+         echo "Fuilure"
+        }
+      }
+}
